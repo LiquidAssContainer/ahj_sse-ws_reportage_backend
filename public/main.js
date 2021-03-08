@@ -1376,7 +1376,17 @@ var ReportageWidget = /*#__PURE__*/function () {
       var date = new Date(event.date);
       var formattedDate = this.getFormattedDate(date);
       var eventElem = "\n      <div class=\"event\">\n        <div class=\"event_date\">".concat(formattedDate, "</div>\n        <div class=\"event_message event-").concat(event.type, "\">").concat(event.message, "</div>\n      </div>");
+      var isScrollAtBottom = this.isScrollAtBottom(this.eventsContainer);
       this.eventsContainer.insertAdjacentHTML('beforeend', eventElem);
+
+      if (isScrollAtBottom) {
+        this.eventsContainer.scrollTop = this.eventsContainer.scrollHeight;
+      }
+    }
+  }, {
+    key: "isScrollAtBottom",
+    value: function isScrollAtBottom(container) {
+      return Math.ceil(container.scrollHeight) === Math.ceil(container.scrollTop + container.clientHeight);
     }
   }, {
     key: "getFormattedDate",
@@ -1403,7 +1413,8 @@ var ReportageWidget = /*#__PURE__*/function () {
 
 // CONCATENATED MODULE: ./src/js/app.js
 
-var widget = new ReportageWidget('/sse');
+var url = 'https://ahj-online-reportage.herokuapp.com/sse';
+var widget = new ReportageWidget(url);
 widget.init();
 // CONCATENATED MODULE: ./src/index.js
 
